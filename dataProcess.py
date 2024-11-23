@@ -1,28 +1,36 @@
 import pandas as pd
 
-# Load the dataset
-file_path = "data/crop_yield.csv"
-data = pd.read_csv(file_path)
+df = pd.read_csv("data/crop_yield.csv")
+# Assume df is your existing dataframe
+# Extract the district names
+districts = df['DISTRICT_NAME']
 
 # Reshape the data
-melted_data = data.melt(
-    id_vars=["DISTRICT_NAME"],  # Columns to keep
-    var_name="Variable",        # Name for the new column of variable names
-    value_name="Value"          # Name for the new column of values
-)
+reshaped_data = []
+for col in df.columns[1:]:  # Skip DISTRICT_NAME
+    crop, stat, year = col.split('_')
+    year = f"{year[:4]}-{year[4:]}"  # Adjust year formatting if needed
+    for district, value in zip(districts, df[col]):
+        reshaped_data.append([district, year, crop, stat, value])
 
-# Extract Crop, Year, and Metric
-melted_data["Crop"] = melted_data["Variable"].str.extract(r'^(.*?)_')[0]
-melted_data["Metric"] = melted_data["Variable"].str.extract(r'_(.*?)_\d')[0]
-melted_data["Year"] = melted_data["Variable"].str.extract(r'_(\d{4}\d{2})$')[0]
+# Create a new DataFrame
+reshaped_df = pd.DataFrame(reshaped_data, columns=['DISTRICT_NAME', 'Year', 'Crop_Type', 'Statistic', 'Value'])
 
-# Convert Year to a standard format (optional)
-melted_data["Year"] = melted_data["Year"].apply(lambda x: f"19{x[:2]}-{x[2:]}" if int(x[:2]) < 50 else f"20{x[:2]}-{x[2:]}")
+# Pivot table to align Area, Production, and Yield into columns
+final_df = reshaped_df.pivot_table(
+    index=['DISTRICT_NAME', 'Year', 'Crop_Type'],
+    columns='Statistic',
+    values='Value',
+    aggfunc='first'
+).reset_index()
 
-# Drop the original variable column
-melted_data = melted_data.drop(columns=["Variable"])
+# Rename columns for clarity
+final_df.columns.name = None  # Remove the multiindex column name
+final_df.rename(columns={
+    'A': 'Area',
+    'P': 'Production',
+    'Y': 'Yield'
+}, inplace=True)
 
-# Pivot or group by as needed
-print(melted_data.head())
-
-melted_data.to_csv('data/structured_crop_yield.csv')
+print(final_df)
+final_df.to_csv("data/structured_crop_yield.csv")
