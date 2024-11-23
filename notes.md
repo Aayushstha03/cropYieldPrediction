@@ -12,4 +12,3 @@ drought or not
 ### Wheat
 
 ### Barley
-
