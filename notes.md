@@ -73,5 +73,8 @@ Here are approximate neighboring districts for the missing ones based on geograp
 ## 2925 unique weather data entries
 75 districts * 39 years(1981 to 2019)
 
-## 15733 rows??? what?
-42 years 1979 to 2021
+## 15750 rows
+3150 per district per crop after divinding by 5 
+75 districts * 42 years (1979 to 2021)
+
+we can use data till 2019 until i add the data for weather from 2019 to 2021
