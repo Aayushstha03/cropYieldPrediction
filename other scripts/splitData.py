@@ -3,7 +3,10 @@ import os  # Import os to handle file removal
 
 # Load datasets
 data = pd.read_csv("FinalDatasets/cropComplete.csv")
+data.fillna(0, inplace=True)
+data.drop(columns=['YIELD'], inplace=True)
 weather_data = pd.read_csv("FinalDatasets/WEATHER_data.csv")
+weather_data.fillna(0, inplace=True)
 
 # Split the crop dataset by crop type and save each to a separate file
 crop_types = data['CROP_TYPE'].unique()
