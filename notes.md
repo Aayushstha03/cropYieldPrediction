@@ -13,8 +13,7 @@ drought or not
 
 ### Barley
 
-
-## handling missing districts 
+# Handling missing districts 
 Here are approximate neighboring districts for the missing ones based on geography:
 
     Bhojpur:
@@ -70,6 +69,7 @@ Here are approximate neighboring districts for the missing ones based on geograp
         Climatic Zone: Hill
 
 
+# DataSet outline
 ## 2925 unique weather data entries
 75 districts * 39 years(1981 to 2019)
 
@@ -78,3 +78,5 @@ Here are approximate neighboring districts for the missing ones based on geograp
 75 districts * 42 years (1979 to 2021)
 
 we can use data till 2019 until i add the data for weather from 2019 to 2021
+
+
