@@ -83,3 +83,11 @@ we can use data till 2019 until i add the data for weather from 2019 to 2021
 
 # Support vector regression SVR 
 used c = 10 and epsilon = 0.5 after using grid search to find the combination that gives the best result
+
+for barley SVR
+for Maize RandomForest
+for Millet RandomForest
+for Paddy RandomForest
+for Wheat RandomForest
+
+so lets go with RandomForest for the model!
